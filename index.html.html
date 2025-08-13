@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>prikacheninventar.bg — Прикачен инвентар, строителна и селскостопанска техника</title>
+  <meta name="description" content="Продажба на прикачен инвентар, строителна и селскостопанска техника втора употреба и части.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --accent:#e65c00;
+      --accent-dark:#cc4f00;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow: 0 8px 24px rgba(8,20,40,0.06);
+      --maxw:1200px;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:#111;line-height:1.45;-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+    header{
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      color:#fff;padding:18px 20px;position:sticky;top:0;z-index:1200;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08)
+    }
+    .topbar{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:48px;height:48px;border-radius:10px;background:rgba(255,255,255,0.12);
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;backdrop-filter:blur(2px)
+    }
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600;padding:6px 8px;border-radius:8px}
+    nav a:hover{background:rgba(255,255,255,0.06)}
+    .socials{display:flex;gap:8px}
+    .socials a{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.08);color:#fff;text-decoration:none}
+    .search-wrap{max-width:var(--maxw);margin:18px auto;padding:0 20px}
+    .search-bar{display:flex;gap:10px;background:var(--card);padding:12px;border-radius:10px;box-shadow:var(--shadow);align-items:center}
+    .search-bar input[type="text"]{flex:1;padding:10px;border-radius:8px;border:1px solid #e6e9ee}
+    .search-bar select{padding:10px;border-radius:8px;border:1px solid #e6e9ee}
+    .search-bar button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+    .container{max-width:var(--maxw);margin:28px auto;padding:0 20px}
+    /* Slider */
+    .slider-wrap{position:relative;margin-bottom:24px;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+    .slider{display:flex;transition:transform 0.6s ease;height:420px}
+    .slide{min-width:100%;position:relative;display:flex;align-items:center}
+    .slide img{width:100%;height:420px;object-fit:cover;display:block;filter:brightness(0.6)}
+    .slide-content{position:absolute;left:36px;bottom:36px;color:#fff;max-width:56%}
+    .slide-content h3{margin:0 0 8px;font-size:28px}
+    .slide-content p{margin:0 0 12px;color:rgba(255,255,255,0.9)}
+    .slide-content .btn{background:#fff;color:var(--accent);padding:8px 12px;border-radius:8px;font-weight:700}
+    .slider-nav{position:absolute;top:50%;left:18px;transform:translateY(-50%);z-index:30}
+    .slider-nav button{background:rgba(0,0,0,0.45);color:#fff;border:none;padding:10px;border-radius:50%;cursor:pointer;margin-bottom:8px}
+    .slider-nav .next{left:auto;right:18px}
+    .dots{position:absolute;right:18px;bottom:18px;display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.45);cursor:pointer}
+    .dot.active{background:var(--accent)}
+    /* Sections */
+    h2{color:var(--accent);margin:6px 0 14px}
+    .grid{display:grid;gap:18px}
+    .products{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(10,25,47,0.06);position:relative;overflow:hidden}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px}
+    .badge{position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;padding:6px 8px;border-radius:8px;font-weight:700;font-size:13px}
+    .card h3{margin:6px 0 6px;font-size:18px}
+    .meta{color:var(--muted);font-size:13px}
+    .card .actions{display:flex;gap:8px;margin-top:12px;align-items:center}
+    .btn-outline{background:transparent;border:1px solid #e6eef6;color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+    /* About / services / faq */
+    .two-col{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:start}
+    .partners{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .partners img{max-height:56px;opacity:0.9}
+    .testimonial{background:linear-gradient(90deg,#fff,#fff);border-left:4px solid var(--accent);padding:14px;border-radius:8px;box-shadow:var(--shadow)}
+    /* Contact form */
+    form{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);max-width:760px;margin-top:12px}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form input, form textarea, form select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ee;font-size:14px}
+    form button{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    form small{color:var(--muted)}
+    /* Blog list */
+    .blog-card img{height:140px;object-fit:cover;border-radius:8px}
+    /* Footer */
+    footer{background:#102027;color:#cfe8ff;padding:28px 20px;margin-top:28px}
+    footer .foot-wrap{max-width:var(--maxw);margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+    footer a{color:#cfe8ff;text-decoration:none}
+    /* Animations */
+    section{opacity:0;transform:translateY(24px);transition:all 0.6s ease}
+    section.visible{opacity:1;transform:none}
+    /* Responsive */
+    @media (max-width:900px){
+      .slide-content{max-width:70%}
+      .two-col{grid-template-columns:1fr}
+      .slider{height:320px}
+      .slide img{height:320px}
+    }
+    @media (max-width:600px){
+      nav{display:none}
+      .topbar{justify-content:space-between}
+      .slide-content{left:16px;bottom:16px;max-width:82%}
+      .search-bar{flex-direction:column}
+      .search-bar input{width:100%}
+      .grid.products{grid-template-columns:1fr}
+      .slider{height:240px}
+      .slide img{height:240px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">PI</div>
+        <div>
+          <div style="font-weight:700;font-size:18px">prikacheninventar.bg</div>
+          <div style="font-size:12px;opacity:0.95">Прикачен инвентар • Строителна и селскостопанска техника</div>
+        </div>
+      </div>
+
+      <nav aria-label="Основна навигация">
+        <a href="#inventory">Прикачен инвентар</a>
+        <a href="#construction">Строителна техника</a>
+        <a href="#agriculture">Селскостопанска техника</a>
+        <a href="#parts">Части</a>
+        <a href="#blog">Блог</a>
+        <a href="#about">За нас</a>
+        <a href="#contact">Контакт</a>
+      </nav>
+
+      <div class="socials" aria-hidden="false">
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-wrap">
+    <div class="search-bar" role="search" aria-label="Търсене на техника">
+      <input id="q" type="text" placeholder="Търсете продукт, марка или модел (напр. Kubota, 1.6 HDI)" aria-label="търсене">
+      <select id="cat">
+        <option value="">Всички категории</option>
+        <option value="bagere">Прикачен инвентар - багери</option>
+        <option value="minicheli">Прикачен инвентар - миничелни товарачи</option>
+        <option value="construction">Строителна техника</option>
+        <option value="agriculture">Селскостопанска техника</option>
+        <option value="parts">Части</option>
+      </select>
+      <button id="searchBtn" aria-label="Търси"><i class="fa fa-search"></i> Търси</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Slider -->
+    <div class="slider-wrap" aria-label="Слайдер с оферти">
+      <div class="slider" id="slider">
+        <div class="slide" data-title="Мини багер Kubota — Намаление">
+          <img src="https://via.placeholder.com/1400x420/ef8a45/ffffff?text=Мини+багер+Kubota+—+Намаление" alt="Мини багер Kubota">
+          <div class="slide-content">
+            <h3>Мини багер Kubota — специална оферта</h3>
+            <p>2020 г., 500 ч. Готов за работа — цена и условия при запитване.</p>
+            <a href="#construction" class="btn" aria-label="Виж повече за Мини багер Kubota">Виж повече</a>
+          </div>
+        </div>
+
+        <div class="slide" data-title="Трактор John Deere — вградена техника">
+          <img src="https://via.placeholder.com/1400x420/ff6f3c/ffffff?text=Трактор+John+Deere+—+Оферта" alt="Трактор John Deere">
+          <div class="slide-content">
+            <h3>Трактор John Deere — готов за сезон</h3>
+            <p>6430, поддържан, обслужен, готов за демонстрация.</p>
+            <a href="#agriculture" class="btn">Виж повече</a>
+          </div>
+        </div>
+
+        <div class="slide" data-title="Части — промоция">
+          <img src="https://via.placeholder.com/1400x420/ff9a57/ffffff?text=Промоция+на+части" alt="Промоция части">
+          <div class="slide-content">
+            <h3>Отстъпки на резервни части</h3>
+            <p>Филтри, помпи и хидравлични елементи с промо цена за ограничено време.</p>
+            <a href="#parts" class="btn">Виж повече</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-nav">
+        <button id="prev" aria-label="Предишен">&#10094;</button>
+        <button id="next" class="next" aria-label="Следващ">&#10095;</button>
+      </div>
+      <div class="dots" id="dots" aria-hidden="false"></div>
+    </div>
+
+    <!-- Inventory -->
+    <section id="inventory" aria-labelledby="inventory-title">
+      <h2 id="inventory-title"><i class="fa-solid fa-truck-pickup"></i> Прикачен инвентар</h2>
+
+      <h3>За багери</h3>
+      <div class="grid products" id="bagere-list">
+        <div class="card" data-category="bagere">
+          <span class="badge">Втора</span>
+          <img src="https://via.placeholder.com/600x360?text=Кофа+1м3" alt="Кофа за багер">
+          <h3>Кофа за багер 1м³</h3>
+          <div class="meta">Подходяща за средни багери • подсилена конструкция</div>
+          <div class="actions">
+            <a class="btn" href="#contact">Запитване</a>
+            <button class="btn-outline" onclick="alert('Добавено в любими')">❤</button>
+          </div>
+        </div>
+
+        <div class="card" data-category="bagere">
+          <img src="https://via.placeholder.com/600x360?text=Хидравличен+чук" alt="Хидравличен чук">
+          <h3>Хидравличен чук</h3>
+          <div class="meta">Atlas Copco — обслужен</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+
+        <div class="card" data-category="bagere">
+          <img src="https://via.placeholder.com/600x360?text=Бързосменник" alt="Бързосменник">
+          <h3>Бързосменник</h3>
+          <div class="meta">Подходящ за багери 15–20 т</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+
+        <div class="card" data-category="bagere">
+          <img src="https://via.placeholder.com/600x360?text=Грайфер" alt="Грайфер">
+          <h3>Грайфер за дървен материал</h3>
+          <div class="meta">Грайфер, 360° въртене</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">За миничелни товарачи</h3>
+      <div class="grid products" id="minicheli-list">
+        <div class="card" data-category="minicheli">
+          <img src="https://via.placeholder.com/600x360?text=Четка" alt="Четка">
+          <h3>Чистачна четка</h3>
+          <div class="meta">Ширина 150 см, бърз монтаж</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+
+        <div class="card" data-category="minicheli">
+          <img src="https://via.placeholder.com/600x360?text=Снегоринна+кофа" alt="Снегоринна кофа">
+          <h3>Снегоринна кофа</h3>
+          <div class="meta">Усилена, с хидравлично отваряне</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+
+        <div class="card" data-category="minicheli">
+          <img src="https://via.placeholder.com/600x360?text=Фреза+за+асфалт" alt="Фреза">
+          <h3>Фреза за асфалт</h3>
+          <div class="meta">Подходяща за малки ремонти</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+
+        <div class="card" data-category="minicheli">
+          <img src="https://via.placeholder.com/600x360?text=Кофа+с+отваряне" alt="Кофа с отваряне">
+          <h3>Кофа с хидравлично отваряне</h3>
+          <div class="meta">Идеална за насипни товари</div>
+          <div class="actions"><a class="btn" href="#contact">Запитване</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Construction -->
+    <section id="construction">
+      <h2><i class="fa-solid fa-building"></i> Строителна техника</h2>
+      <div class="grid products">
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Мини+багер+Kubota" alt=""><h3>Мини багер Kubota</h3><div class="meta">2008 • 2500 ч.</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Виброплоча" alt=""><h3>Виброплоча Wacker</h3><div class="meta">Компактен модел</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Телескопичен+товарач" alt=""><h3>Телескопичен товарач Manitou</h3><div class="meta">2012 • с вилици и кофа</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Ролер+Bomag" alt=""><h3>Ролер Bomag</h3><div class="meta">Двувалцов • дизелов</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+      </div>
+    </section>
+
+    <!-- Agriculture -->
+    <section id="agriculture">
+      <h2><i class="fa-solid fa-tractor"></i> Селскостопанска техника</h2>
+      <div class="grid products">
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=John+Deere" alt=""><h3>Трактор John Deere 6430</h3><div class="meta">2007 • перфектно състояние</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Комбайн+Claas" alt=""><h3>Комбайн Claas</h3><div class="meta">2005 • обслужен</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Сенокосачка+Kuhn" alt=""><h3>Сенокосачка Kuhn</h3><div class="meta">Готова за работа</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Пръскачка+Amazone" alt=""><h3>Пръскачка Amazone</h3><div class="meta">Вместимост 2000 л.</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+      </div>
+    </section>
+
+    <!-- Parts -->
+    <section id="parts">
+      <h2><i class="fa-solid fa-cogs"></i> Части</h2>
+      <div class="grid products">
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Хидравлична+помпа" alt=""><h3>Хидравлична помпа</h3><div class="meta">За багери и трактори</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Филтри" alt=""><h3>Филтри за трактори</h3><div class="meta">Маслени • горивни • въздушни</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Верига" alt=""><h3>Верига за багер</h3><div class="meta">Здрава стомана, различни размери</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+        <div class="card"><img src="https://via.placeholder.com/600x360?text=Уплътнения" alt=""><h3>Комплект уплътнения</h3><div class="meta">За хидравлични цилиндри</div><div class="actions"><a class="btn" href="#contact">Запитване</a></div></div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <h2><i class="fa-solid fa-wrench"></i> Нашите услуги</h2>
+      <div class="two-col">
+        <div>
+          <p>Предлагаме пълен набор услуги: диагностика, ремонт, монтаж, транспорт и сервизно обслужване. Нашият екип извършва тестове, гаранционни и следгаранционни ремонти.</p>
+          <ul>
+            <li>Демонтаж/монтаж на двигатели и агрегати</li>
+            <li>Хидравлични ремонти</li>
+            <li>Транспорт и логистика</li>
+            <li>Пълни сервизни пакети</li>
+          </ul>
+        </div>
+        <aside>
+          <h3>Бърза оферта</h3>
+          <p class="meta">Изпратете запитване и ще получите отговор в рамките на 24 часа.</p>
+          <a class="btn" href="#contact">Изпрати запитване</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section id="blog">
+      <h2><i class="fa-solid fa-newspaper"></i> Блог</h2>
+      <div class="grid blog-posts" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+        <article class="card blog-card">
+          <img src="https://via.placeholder.com/800x440?text=Как+да+изберем" alt="">
+          <h3>Как да изберем правилния прикачен инвентар?</h3>
+          <p class="meta">Съвети при покупка на втора употреба техника.</p>
+          <div style="margin-top:10px"><a class="btn" href="#">Прочети повече</a></div>
+        </article>
+
+        <article class="card blog-card">
+          <img src="https://via.placeholder.com/800x440?text=Поддръжка" alt="">
+          <h3>Поддръжка на строителна техника</h3>
+          <p class="meta">Практични съвети за удължаване живота на машината.</p>
+          <div style="margin-top:10px"><a class="btn" href="#">Прочети повече</a></div>
+        </article>
+
+        <article class="card blog-card">
+          <img src="https://via.placeholder.com/800x440?text=Тенденции+2025" alt="">
+          <h3>Тенденции в селскостопанските машини 2025</h3>
+          <p class="meta">Какво да очакваме на пазара тази година.</p>
+          <div style="margin-top:10px"><a class="btn" href="#">Прочети повече</a></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2><i class="fa-solid fa-circle-question"></i> Често задавани въпроси (FAQ)</h2>
+      <div class="card">
+        <p><strong>В: Доставяте ли в цялата страна?</strong><br>О: Да — организираме транспорт до всяка точка на България.</p>
+        <p><strong>В: Давате ли гаранция?</strong><br>О: За повечето ремонти и някои части предлагаме гаранция — попитайте за конкретната оферта.</p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h2><i class="fa-solid fa-circle-info"></i> За нас</h2>
+      <p>prikacheninventar.bg е екип от специалисти с над 15 години опит в търговията и сервиза на строителна и селскостопанска техника. Предлагаме внимателно проверени машини, резервни части и професионални услуги.</p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2><i class="fa-solid fa-envelope"></i> Контакт и запитване</h2>
+      <form id="contactForm" onsubmit="return handleContact(event)">
+        <div class="row">
+          <input type="text" id="name" placeholder="Вашето име" required>
+          <input type="email" id="email" placeholder="Вашият имейл" required>
+        </div>
+        <div class="row">
+          <input type="text" id="phone" placeholder="Телефон (по избор)">
+          <select id="interest">
+            <option value="">Относно</option>
+            <option value="product">Продукт</option>
+            <option value="service">Услуга</option>
+            <option value="parts">Части</option>
+          </select>
+        </div>
+        <textarea id="message" rows="5" placeholder="Вашето съобщение" required></textarea>
+        <div style="display:flex;gap:12px;align-items:center">
+          <button type="submit">Изпрати запитване</button>
+          <small class="meta">Ще Ви отговорим в рамките на 24 часа.</small>
+        </div>
+      </form>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners-section">
+      <h2>Нашите партньори</h2>
+      <div class="partners">
+        <img src="https://via.placeholder.com/140x60?text=Partner+1" alt="Partner 1">
+        <img src="https://via.placeholder.com/140x60?text=Partner+2" alt="Partner 2">
+        <img src="https://via.placeholder.com/140x60?text=Partner+3" alt="Partner 3">
+        <img src="https://via.placeholder.com/140x60?text=Partner+4" alt="Partner 4">
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+      <h2>Отзиви от клиенти</h2>
+      <div class="grid products" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div class="testimonial">"Бързо и коректно обслужване — препоръчвам!" — Иван П.</div>
+        <div class="testimonial">"Намерихме точно това, от което имахме нужда." — Агротехника ООД</div>
+        <div class="testimonial">"Професионален сервиз и добра комуникация." — Строител-БГ</div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="foot-wrap">
+      <div>
+        <strong>prikacheninventar.bg</strong><br>
+        Тел: +359 88 123 4567<br>
+        Email: info@prikacheninventar.bg
+      </div>
+      <div>
+        <strong>Бързи връзки</strong><br>
+        <a href="#inventory">Прикачен инвентар</a><br>
+        <a href="#construction">Строителна техника</a><br>
+        <a href="#agriculture">Селскостопанска техника</a>
+      </div>
+      <div>
+        <strong>Следвайте ни</strong><br>
+        <a href="#">Facebook</a> • <a href="#">Instagram</a> • <a href="#">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection observer for section reveal
+    const sections = document.querySelectorAll('section');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold: 0.12});
+    sections.forEach(s => obs.observe(s));
+
+    // Slider logic (no external libs)
+    (function(){
+      const slider = document.getElementById('slider');
+      const slides = slider.querySelectorAll('.slide');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      const dotsWrap = document.getElementById('dots');
+      let idx = 0;
+      let interval = null;
+
+      // create dots
+      slides.forEach((s,i)=>{
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===0 ? ' active' : '');
+        d.dataset.index = i;
+        d.addEventListener('click', ()=> goTo(i));
+        dotsWrap.appendChild(d);
+      });
+
+      function update(){
+        slider.style.transform = `translateX(-${idx * 100}%)`;
+        const dots = dotsWrap.querySelectorAll('.dot');
+        dots.forEach(d=>d.classList.remove('active'));
+        dots[idx].classList.add('active');
+      }
+
+      function prevSlide(){ idx = (idx-1+slides.length)%slides.length; update(); reset(); }
+      function nextSlide(){ idx = (idx+1)%slides.length; update(); reset(); }
+      function goTo(i){ idx = i; update(); reset(); }
+
+      prev.addEventListener('click', prevSlide);
+      next.addEventListener('click', nextSlide);
+
+      function start(){ interval = setInterval(()=>{ idx = (idx+1)%slides.length; update(); }, 4500); }
+      function reset(){ clearInterval(interval); start(); }
+      start();
+      // initial
+      update();
+    })();
+
+    // Simple search filter (client-side demo)
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const q = document.getElementById('q').value.trim().toLowerCase();
+      const cat = document.getElementById('cat').value;
+      const cards = document.querySelectorAll('.card[data-category], .card');
+      cards.forEach(c => {
+        const title = (c.querySelector('h3')?.textContent || '').toLowerCase();
+        const meta = (c.querySelector('.meta')?.textContent || '').toLowerCase();
+        const category = c.dataset.category || '';
+        const matchQ = !q || title.includes(q) || meta.includes(q);
+        const matchCat = !cat || category.includes(cat);
+        if (matchQ && matchCat) c.style.display = '';
+        else c.style.display = 'none';
+      });
+      // scroll to first visible
+      const first = Array.from(cards).find(x => x.style.display !== 'none');
+      if(first) first.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    // Contact form handler (demo)
+    function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){
+        alert('Моля попълнете задължителните полета.');
+        return false;
+      }
+      // В реален сайт -> изпращане към бекенд (fetch/axios)
+      alert('Благодарим, ' + name + '! Вашето запитване е изпратено. Ще се свържем скоро.');
+      document.getElementById('contactForm').reset();
+      return false;
+    }
+  </script>
+</body>
+</html>
